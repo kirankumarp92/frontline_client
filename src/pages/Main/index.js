@@ -18,8 +18,10 @@ import Home from "./Home";
 import Login from "./Login";
 import Logout from "./Logout";
 import LoginRequired from "./LoginRequired";
+
 import Demo from "./Demo";
 import Authorize, { Fallback } from "@components/Authorize";
+
 
 const PrivacyPolicy = lazy(() => import("@components/Content/PrivacyPolicy"));
 const Terms = lazy(() => import("@components/Content/Terms"));
@@ -118,7 +120,7 @@ function App({ loggedIn, user, volunteerCount }) {
                         </Authorize>
                       </LoginRequired>
                     </Route>
-
+                    
                     <Route path="/login">
                       <Login {...pageProps} />
                     </Route>
