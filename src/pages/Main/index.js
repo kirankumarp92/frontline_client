@@ -68,7 +68,7 @@ function App({ loggedIn, user, volunteerCount }) {
                       <VolunteerSignup {...pageProps} />
                     </Route>
 
-                    <Route path="/ngo">
+                    <Route path="/ngosignup">
                       <NgoSignup {...pageProps} />
                     </Route>
 
