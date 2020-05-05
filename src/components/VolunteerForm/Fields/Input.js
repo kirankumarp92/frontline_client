@@ -97,6 +97,23 @@ export const Covid19Field = () => (
   </Form.Item>
 );
 
+export const Covid19Field = () => (
+  <Form.Item
+    label="COVID 19 activities"
+    name="covid19"
+    rules={[
+      { required: true, message: "Activities undertaken so far is required" },
+    ]}
+  >
+    <TextArea
+      maxLength={100}
+      type="textarea"
+      rows={4}
+      placeholder="COVID 19 activities undertaken so far"
+    />
+  </Form.Item>
+);
+
 export const PinField = () => (
   <Form.Item
     label="Pin Code"
