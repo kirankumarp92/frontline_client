@@ -1,6 +1,7 @@
 import React from "react";
 import { Table } from "antd";
 import Details from "./Details";
+import * as styles from "./styles.module.less";
 import { getPaginationObject, renderStatus } from "../utils";
 
 const RequestSearchResults = ({
@@ -49,6 +50,15 @@ const RequestSearchResults = ({
             expandedRowRender: (record) => (
               <div>
                 <Details record={record} />
+                <button
+                  className={styles.updateRequestBtn}
+                  // onClick={this.props.navigateToUpdateRequestPage.bind(
+                  //   this,
+                  //   record._id
+                  // )}
+                >
+                  Update Request
+                </button>
               </div>
             ),
             expandRowByClick: false,
