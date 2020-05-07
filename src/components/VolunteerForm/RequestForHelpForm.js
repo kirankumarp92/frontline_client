@@ -64,6 +64,19 @@ const RequestForHelpForm = (props) => {
         <NOPField />
 
         <Form.Item
+          label="Number of Persons"
+          name="nop"
+          rules={[
+            {
+              required: true,
+              message: "Number of Persons is required.",
+            },
+          ]}
+        >
+          <Input type="number" min="1" placeholder="Enter Number of Presons." />
+        </Form.Item>
+
+        <Form.Item
           label="Area"
           name="area"
           rules={[
