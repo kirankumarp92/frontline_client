@@ -39,6 +39,10 @@ const RequestSearchResults = ({
     },
   ];
 
+  const navigateToUpdateRequestPage = function () {
+    console.log(arguments[0]);
+  };
+
   return (
     <div>
       <div>
@@ -52,10 +56,7 @@ const RequestSearchResults = ({
                 <Details record={record} />
                 <button
                   className={styles.updateRequestBtn}
-                  // onClick={this.props.navigateToUpdateRequestPage.bind(
-                  //   this,
-                  //   record._id
-                  // )}
+                  onClick={navigateToUpdateRequestPage(record._id)}
                 >
                   Update Request
                 </button>
