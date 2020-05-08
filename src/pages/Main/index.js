@@ -111,6 +111,14 @@ function App({ loggedIn, user, volunteerCount }) {
                     <Route path="/NGO">
 
                     <Route path="/demo">
+
+                    <Route path="/requestforhelpupdate">
+                      <LoginRequired loggedIn={loggedIn}>
+                        <RequestForHelpUpdate {...pageProps} />
+                      </LoginRequired>
+                    </Route>
+
+                    <Route path="/NGO">
                       <LoginRequired loggedIn={loggedIn}>
                         <Authorize
                           roles={["ngo", "admin", "staff"]}

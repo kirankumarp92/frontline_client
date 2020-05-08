@@ -125,16 +125,16 @@ export const NameField = ({
   label = "Name",
   placeholder = "Enter your full name",
   name = "name",
+  disabled = false,
 }) => {
   return (
     <Form.Item
       label={label}
       name={name}
       rules={[{ required: true, message: "Name is required" }]}
+      disabled={disabled}
     >
-      <Input maxLength={200} placeholder={placeholder} />
-
-      <Input maxLength={200} placeholder={placeholder} />
+      <Input maxLength={200} placeholder={placeholder} disabled={disabled} />
     </Form.Item>
   );
 };
