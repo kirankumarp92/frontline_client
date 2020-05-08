@@ -2,6 +2,7 @@ import update from "immutability-helper";
 import { connect } from "react-redux";
 import { applyScope } from "./utils";
 import { pageSelector } from "./selectors";
+
 import { createSelector } from "reselect";
 
 const scope = "requestForHelpUpdate";

@@ -7,10 +7,12 @@ export const MobileField = ({
   label = "Mobile Number",
   name = "mobile",
   placeholder = "Enter your mobile number",
+  disabled = false,
 }) => (
   <Form.Item
     label={label}
     name={name}
+    disabled={disabled}
     rules={[
       {
         required: true,
@@ -27,15 +29,16 @@ export const MobileField = ({
       },
     ]}
   >
-    <Input maxLength={10} placeholder={placeholder} />
+    <Input maxLength={10} placeholder={placeholder} disabled={disabled} />
   </Form.Item>
 );
 
-export const ConfirmMobileField = () => (
+export const ConfirmMobileField = ({ disabled = false }) => (
   <Form.Item
     label="Confirm Mobile Number"
     name="co_mobile"
     dependencies={["mobile"]}
+    disabled={disabled}
     hasFeedback
     rules={[
       {
@@ -57,17 +60,22 @@ export const ConfirmMobileField = () => (
       }),
     ]}
   >
-    <Input maxLength={10} placeholder="Enter re-enter your mobile number" />
+    <Input
+      maxLength={10}
+      placeholder="Enter re-enter your mobile number"
+      disabled={disabled}
+    />
   </Form.Item>
 );
 
-export const AddressField = () => (
-  <Form.Item label="Address" name="address">
+export const AddressField = ({ disabled = false }) => (
+  <Form.Item label="Address" name="address" disabled={disabled}>
     <TextArea
       maxLength={100}
       type="textarea"
       rows={4}
       placeholder="Enter your address"
+      disabled={disabled}
     />
   </Form.Item>
 );
@@ -124,6 +132,8 @@ export const NameField = ({
       name={name}
       rules={[{ required: true, message: "Name is required" }]}
     >
+      <Input maxLength={200} placeholder={placeholder} />
+
       <Input maxLength={200} placeholder={placeholder} />
     </Form.Item>
   );
@@ -264,10 +274,11 @@ export const AreaField = () => (
   </Form.Item>
 );
 
-export const NOPField = () => (
+export const NOPField = ({ disabled = false }) => (
   <Form.Item
     label="Number of Persons"
     name="nop"
+    disabled={disabled}
     rules={[
       {
         required: true,
@@ -279,6 +290,7 @@ export const NOPField = () => (
       type="number"
       min="1"
       maxLength={5}
+      disabled={disabled}
       placeholder="Enter number of individuals who need help"
     />
   </Form.Item>
