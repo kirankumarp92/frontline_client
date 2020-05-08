@@ -39,6 +39,14 @@ export function StatusSelect({ status, onStatusChannge }) {
   );
 }
 
+export function StatusSelectRequestForm({ status, onStatusChannge }) {
+  return (
+    <Select value={status} onChange={onStatusChannge}>
+      {statusOptions()}
+    </Select>
+  );
+}
+
 export function RegionSelect({ region, regions, onRegionChange }) {
   return (
     <Cascader

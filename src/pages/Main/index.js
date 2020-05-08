@@ -30,6 +30,7 @@ const Kind = lazy(() => import("./Kind"));
 const Appeal = lazy(() => import("./Appeal"));
 const Report = lazy(() => import("./Report"));
 const RequestForHelp = lazy(() => import("./RequestForHelp"));
+const RequestForHelpUpdate = lazy(() => import("./RequestForHelpUpdate"));
 
 const { Content, Footer } = Layout;
 
@@ -84,6 +85,12 @@ function App({ loggedIn, user, volunteerCount }) {
 
                     <Route path="/request">
                       <RequestForHelp {...pageProps} />
+                    </Route>
+
+                    <Route path="/requestforhelpupdate">
+                      <LoginRequired loggedIn={loggedIn}>
+                        <RequestForHelpUpdate {...pageProps} />
+                      </LoginRequired>
                     </Route>
 
                     <Route path="/NGO">
