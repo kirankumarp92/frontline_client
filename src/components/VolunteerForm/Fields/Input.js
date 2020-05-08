@@ -76,7 +76,6 @@ export const AddressField = ({ disabled = false }) => (
       rows={4}
       placeholder="Enter your address"
       disabled={disabled}
-    />
   </Form.Item>
 );
 
