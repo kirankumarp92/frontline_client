@@ -3,6 +3,7 @@ import { Table } from "antd";
 import Details from "./Details";
 import * as styles from "./styles.module.less";
 import { getPaginationObject, renderStatus } from "../utils";
+import { useHistory } from "react-router-dom";
 
 const RequestSearchResults = ({
   result,
@@ -38,9 +39,9 @@ const RequestSearchResults = ({
       render: (id, row) => renderStatus(id, row, onResultClose),
     },
   ];
-
+  const history = useHistory();
   const navigateToUpdateRequestPage = function () {
-    console.log(arguments[0]);
+    history.push("/requestforhelpupdate");
   };
 
   return (
@@ -56,7 +57,7 @@ const RequestSearchResults = ({
                 <Details record={record} />
                 <button
                   className={styles.updateRequestBtn}
-                  onClick={navigateToUpdateRequestPage(record._id)}
+                  onClick={navigateToUpdateRequestPage.bind(this, record._id)}
                 >
                   Update Request
                 </button>
