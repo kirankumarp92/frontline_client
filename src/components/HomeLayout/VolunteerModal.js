@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Modal, Button } from "antd";
-import { VolunteerFormLink } from "@utils/constants";
+import { NgoFormLink, VolunteerFormLink } from "@utils/constants";
 
 const VolunteerModal = (props) => {
   return (
@@ -29,7 +29,7 @@ const VolunteerModal = (props) => {
         <p className="modal-txt">
           <span> Register as an </span>
           <span>
-            <Link to="/ngosignup">
+            <Link to="/ngo">
               <Button type="primary">NGO</Button>
             </Link>
           </span>

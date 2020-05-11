@@ -8,7 +8,6 @@ import createSagaMiddleware from "redux-saga";
 import { initSaga } from "./sagas";
 import kindReducer from "./kind";
 import kindReportReducer from "./kindReport";
-import ngoReportReducer from "./ngoReport";
 import requestReportReducer from "./requestReport";
 import appealReducer from "./appeal";
 import appealReportReducer from "./appealReport";

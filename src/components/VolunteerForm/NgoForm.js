@@ -15,7 +15,13 @@ import {
   AddressField,
 } from "./Fields/Input";
 
-import { formatData, formatZoneInfoForTree } from "./utils";
+// import {
+//   CommunicationsField,
+//   EntrepreneurialField,
+//   EssentialField,
+//   HealthField,
+// } from "./Fields/Multi";
+import { formatData } from "./utils";
 
 function NgoForm({ initialValues, regions, urban, onSubmit, reset }) {
   const [form] = Form.useForm();
@@ -70,18 +76,17 @@ function NgoForm({ initialValues, regions, urban, onSubmit, reset }) {
         <AddressField />
 
         <MultipleDistrictSelect
-          options={regions}
+          options={regions.find((x) => x.id === "17").children}
           onChange={onDistrictChange}
           nameVal={"region"}
         />
 
         <UrbanOperationalArea
-          options={formatZoneInfoForTree(urban)}
-          isVisible={district.includes("KA") || district.includes("5")}
+          options={urban}
+          isVisible={district.includes("5")}
         />
 
         <Covid19Field />
-
         <NOVField isRequired={true} nameVal={"nov"} />
 
         <Form.Item {...tailFormItemLayout}>

@@ -6,7 +6,7 @@ import { pageSelector } from "./selectors";
 const scope = "ngoSignup";
 
 const initialState = {
-  mode: "ngosignup",
+  mode: "ngo",
   reset: 1,
 };
 
