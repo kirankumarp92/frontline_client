@@ -1,27 +1,27 @@
 import React, { useEffect } from "react";
-import { Form, Input, Button } from "antd";
+import { Form, Button, Input, Descriptions } from "antd";
 import { formItemLayout, tailFormItemLayout } from "./layout";
+import * as styles from "./Fields/index.module.less";
+import {
+  MedicalField,
+  NonMedicalField,
+  MultipleDistrictSelect,
+  UrbanOperationalArea,
+} from "./Fields/Select";
 
-import { MedicalField, NonMedicalField, RegionSelect } from "./Fields/Select";
 import { StatusSelectRequestForm } from "../SelectorPanel/SelectFields";
 import { statusOptions } from "@components/SelectorPanel/SelectFields";
+const { Item } = Descriptions;
 
-const { TextArea } = Input;
-import {
-  MobileField,
-  AddressField,
-  PinField,
-  NameField,
-  ConfirmMobileField,
-  NOPField,
-} from "./Fields/Input";
 import { DynamicServicList } from "./Fields/Dynamic";
 import { Section } from "./Fields/Other";
+const { TextArea } = Input;
 
 function RequestForHelpUpdateForm({
   onSubmit,
   reset,
   regions,
+  urban,
   services,
   initialValues,
 }) {
@@ -59,96 +59,82 @@ function RequestForHelpUpdateForm({
     setNonMedical(res);
   }
 
+  const [district, setDistrict] = React.useState(
+    initialValues.meta.district || []
+  );
+
+  function onDistrictChange(value) {
+    setDistrict(value);
+  }
+
   return (
-    <Form
-      form={form}
-      {...formItemLayout}
-      initialValues={initialValues}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-    >
-      <Section label="Help Required At" />
-
-      <NameField
-        label="Point of Contact - Name"
-        placeholder="Enter point of contact's name"
-        name="poc_name"
-        disabled="true"
-      />
-
-      <MobileField
-        name="poc_mobile"
-        label="Point of Contact - Mobile"
-        placeholder="Enter point of contact's mobile number"
-        disabled="true"
-      />
-      <Form.Item
-        label="Description"
-        name="desc"
-        rules={[
-          {
-            required: true,
-            message: "Description is required.",
-          },
-        ]}
+    <div>
+      <div>
+        <Descriptions className={styles.requestForHelpFormDescriptions}>
+          <Item label="PoC Name"></Item>
+          <Item label="PoC Mobile"></Item>
+          <Item label="Number of Persons"></Item>
+          <Item label="Area"></Item>
+          <Item label="Region"></Item>
+          <Item label="Pin Code"></Item>
+          <Item label="Name"></Item>
+          <Item label="Mobile Number"></Item>
+          <Item label="Address"></Item>
+        </Descriptions>
+      </div>
+      <Section label="Request for Help Additonal Fields" />
+      <br></br>
+      <Form
+        form={form}
+        {...formItemLayout}
+        initialValues={initialValues}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
       >
-        <TextArea
-          type="textarea"
-          rows={4}
-          disabled
-          placeholder="Please describe your request along with secondary contact info if any"
+        <Form.Item label="Description" name="desc">
+          <TextArea
+            type="textarea"
+            rows={4}
+            disabled="true"
+            placeholder="Please describe your request along with secondary contact info if any"
+          />
+        </Form.Item>
+
+        <MultipleDistrictSelect
+          options={regions.find((x) => x.id === "17").children}
+          onChange={onDistrictChange}
+          nameVal={"region"}
         />
-      </Form.Item>
 
-      <NOPField disabled="true" />
+        <UrbanOperationalArea
+          options={urban}
+          isVisible={district.includes("5")}
+        />
 
-      <Form.Item
-        label="Area"
-        name="area"
-        rules={[
-          {
-            required: true,
-            message: "Area is required.",
-          },
-        ]}
-      >
-        <Input placeholder="Enter area/locality" disabled />
-      </Form.Item>
+        <MedicalField
+          options={services.medicalOptions}
+          onChange={onMedicalChange}
+        />
 
-      <RegionSelect options={regions} />
+        <DynamicServicList serviceType="medical" options={medical} />
 
-      <PinField />
+        <NonMedicalField
+          options={services.nonMedicalOptions}
+          onChange={onNonMedicalChange}
+        />
+        <DynamicServicList serviceType="nonmedical" options={nonMedical} />
 
-      <MedicalField
-        options={services.medicalOptions}
-        onChange={onMedicalChange}
-      />
+        <Form.Item label="Status" name="status">
+          <StatusSelectRequestForm status={statusOptions} />
+        </Form.Item>
 
-      <DynamicServicList serviceType="medical" options={medical} />
-
-      <NonMedicalField
-        options={services.nonMedicalOptions}
-        onChange={onNonMedicalChange}
-      />
-      <DynamicServicList serviceType="nonmedical" options={nonMedical} />
-
-      <Form.Item label="Status" name="status">
-        <StatusSelectRequestForm status={statusOptions} />
-      </Form.Item>
-
-      <Section label="Request Raised By" />
-
-      <NameField disabled="true" />
-      <MobileField disabled="true" />
-      <ConfirmMobileField disabled="true" />
-      <AddressField disabled="true" />
-
-      <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">
-          Update
-        </Button>
-      </Form.Item>
-    </Form>
+        <Form.Item {...tailFormItemLayout}>
+          <Button type="primary" htmlType="submit">
+            Update
+          </Button>
+        </Form.Item>
+      </Form>
+    </div>
   );
 }
 

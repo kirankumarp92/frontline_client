@@ -7,7 +7,8 @@ import { connecter } from "@store/RequestForHelpUpdate";
 function RequestForHelpUpdate({ save, reset }) {
   // default to Karnataka, Bangalore
   const initialValues = {
-    region: ["KA", "5"],
+    region: [],
+    meta: {},
   };
 
   function handleSubmit(formData) {

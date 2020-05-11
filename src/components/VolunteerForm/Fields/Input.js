@@ -7,12 +7,10 @@ export const MobileField = ({
   label = "Mobile Number",
   name = "mobile",
   placeholder = "Enter your mobile number",
-  disabled = false,
 }) => (
   <Form.Item
     label={label}
     name={name}
-    disabled={disabled}
     rules={[
       {
         required: true,
@@ -29,16 +27,15 @@ export const MobileField = ({
       },
     ]}
   >
-    <Input maxLength={10} placeholder={placeholder} disabled={disabled} />
+    <Input maxLength={10} placeholder={placeholder} />
   </Form.Item>
 );
 
-export const ConfirmMobileField = ({ disabled = false }) => (
+export const ConfirmMobileField = () => (
   <Form.Item
     label="Confirm Mobile Number"
     name="co_mobile"
     dependencies={["mobile"]}
-    disabled={disabled}
     hasFeedback
     rules={[
       {
@@ -60,38 +57,17 @@ export const ConfirmMobileField = ({ disabled = false }) => (
       }),
     ]}
   >
-    <Input
-      maxLength={10}
-      placeholder="Enter re-enter your mobile number"
-      disabled={disabled}
-    />
+    <Input maxLength={10} placeholder="Enter re-enter your mobile number" />
   </Form.Item>
 );
 
-export const AddressField = ({ disabled = false }) => (
-  <Form.Item label="Address" name="address" disabled={disabled}>
+export const AddressField = () => (
+  <Form.Item label="Address" name="address">
     <TextArea
       maxLength={100}
       type="textarea"
       rows={4}
       placeholder="Enter your address"
-      disabled={disabled}
-  </Form.Item>
-);
-
-export const Covid19Field = () => (
-  <Form.Item
-    label="COVID 19 activities"
-    name="covid19"
-    rules={[
-      { required: true, message: "Activities undertaken so far is required" },
-    ]}
-  >
-    <TextArea
-      maxLength={100}
-      type="textarea"
-      rows={4}
-      placeholder="COVID 19 activities undertaken so far"
     />
   </Form.Item>
 );
@@ -141,16 +117,14 @@ export const NameField = ({
   label = "Name",
   placeholder = "Enter your full name",
   name = "name",
-  disabled = false,
 }) => {
   return (
     <Form.Item
       label={label}
       name={name}
       rules={[{ required: true, message: "Name is required" }]}
-      disabled={disabled}
     >
-      <Input maxLength={200} placeholder={placeholder} disabled={disabled} />
+      <Input maxLength={200} placeholder={placeholder} />
     </Form.Item>
   );
 };
@@ -290,11 +264,10 @@ export const AreaField = () => (
   </Form.Item>
 );
 
-export const NOPField = ({ disabled = false }) => (
+export const NOPField = () => (
   <Form.Item
     label="Number of Persons"
     name="nop"
-    disabled={disabled}
     rules={[
       {
         required: true,
@@ -306,7 +279,6 @@ export const NOPField = ({ disabled = false }) => (
       type="number"
       min="1"
       maxLength={5}
-      disabled={disabled}
       placeholder="Enter number of individuals who need help"
     />
   </Form.Item>
