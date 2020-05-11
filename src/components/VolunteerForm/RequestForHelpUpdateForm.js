@@ -91,9 +91,10 @@ function RequestForHelpUpdateForm({
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <Form.Item label="Description" name="desc">
+        <Form.Item label="Description">
           <TextArea
             type="textarea"
+            name="desc"
             rows={4}
             disabled="true"
             placeholder="Please describe your request along with secondary contact info if any"

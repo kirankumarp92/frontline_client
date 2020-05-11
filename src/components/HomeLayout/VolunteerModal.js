@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Modal, Button } from "antd";
-import { NgoFormLink, VolunteerFormLink } from "@utils/constants";
+import { VolunteerFormLink } from "@utils/constants";
 
 const VolunteerModal = (props) => {
   return (
