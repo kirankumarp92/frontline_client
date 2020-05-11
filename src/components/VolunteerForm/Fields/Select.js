@@ -116,13 +116,12 @@ export const MultipleDistrictSelect = ({
   options,
   onChange,
   nameVal = ["services", "operationalArea", "value"],
+  label = "District of Operation",
+  mode = "multiple",
+  placeholder = "multiple options can be selected",
 }) => (
-  <Form.Item name={nameVal} label="District of Operation">
-    <Select
-      mode="multiple"
-      placeholder="multiple options can be selected"
-      onChange={onChange}
-    >
+  <Form.Item name={nameVal} label={label}>
+    <Select mode={mode} placeholder={placeholder} onChange={onChange}>
       {renderOptionsLabel(options)}
     </Select>
   </Form.Item>
@@ -132,9 +131,10 @@ export const UrbanOperationalArea = ({
   options,
   onChange,
   isVisible = false,
+  label = "Name of Area(s) of Operations",
 }) =>
   isVisible ? (
-    <Form.Item label="Name of Area(s) of Operations" name="bbmp">
+    <Form.Item label={label} name="bbmp">
       <TreeSelect
         {...{
           treeData: options,
@@ -142,6 +142,29 @@ export const UrbanOperationalArea = ({
           treeCheckable: true,
           showCheckedStrategy: TreeSelect.SHOW_PARENT,
           placeholder: "Please select operational areas",
+        }}
+      />
+    </Form.Item>
+  ) : (
+    ""
+  );
+
+export const WardListField = ({
+  options,
+  onChange,
+  isVisible = false,
+  label = "Ward",
+}) =>
+  isVisible ? (
+    <Form.Item label={label} name="ward">
+      <TreeSelect
+        {...{
+          treeData: options,
+          onChange: onChange,
+          treeCheckable: false,
+          multiple: false,
+          showCheckedStrategy: TreeSelect.SHOW_PARENT,
+          placeholder: "Please select ward",
         }}
       />
     </Form.Item>

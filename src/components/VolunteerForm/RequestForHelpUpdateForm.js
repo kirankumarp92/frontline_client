@@ -2,11 +2,12 @@ import React, { useEffect } from "react";
 import { Form, Button, Input, Descriptions } from "antd";
 import { formItemLayout, tailFormItemLayout } from "./layout";
 import * as styles from "./Fields/index.module.less";
+import { NGOField } from "./Fields/Input";
 import {
   MedicalField,
   NonMedicalField,
   MultipleDistrictSelect,
-  UrbanOperationalArea,
+  WardListField,
 } from "./Fields/Select";
 
 import { StatusSelectRequestForm } from "../SelectorPanel/SelectFields";
@@ -91,12 +92,11 @@ function RequestForHelpUpdateForm({
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <Form.Item label="Description">
+        <Form.Item label="Description" name="desc">
           <TextArea
             type="textarea"
-            name="desc"
             rows={4}
-            disabled="true"
+            disabled={true}
             placeholder="Please describe your request along with secondary contact info if any"
           />
         </Form.Item>
@@ -105,12 +105,12 @@ function RequestForHelpUpdateForm({
           options={regions.find((x) => x.id === "17").children}
           onChange={onDistrictChange}
           nameVal={"region"}
+          label="Region"
+          mode="single"
+          placeholder="Select Region"
         />
 
-        <UrbanOperationalArea
-          options={urban}
-          isVisible={district.includes("5")}
-        />
+        <WardListField options={urban} isVisible={district.includes("5")} />
 
         <MedicalField
           options={services.medicalOptions}
@@ -124,6 +124,8 @@ function RequestForHelpUpdateForm({
           onChange={onNonMedicalChange}
         />
         <DynamicServicList serviceType="nonmedical" options={nonMedical} />
+
+        <NGOField />
 
         <Form.Item label="Status" name="status">
           <StatusSelectRequestForm status={statusOptions} />

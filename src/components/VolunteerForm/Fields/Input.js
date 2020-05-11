@@ -129,6 +129,18 @@ export const NameField = ({
   );
 };
 
+export const NGOField = ({
+  label = "NGO Assigned",
+  placeholder = "Enter NGO name",
+  name = "ngoName",
+}) => {
+  return (
+    <Form.Item label={label} name={name}>
+      <Input maxLength={200} placeholder={placeholder} />
+    </Form.Item>
+  );
+};
+
 export const EmailField = ({ isRequired = false }) => (
   <Form.Item
     label="Email"
