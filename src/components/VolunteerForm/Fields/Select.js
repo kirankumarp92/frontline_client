@@ -164,7 +164,7 @@ export const WardListField = ({
           treeCheckable: false,
           multiple: false,
           showCheckedStrategy: TreeSelect.SHOW_PARENT,
-          placeholder: "Please select ward",
+          placeholder: "Please select Ward",
         }}
       />
     </Form.Item>
