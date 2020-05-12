@@ -9,7 +9,11 @@ const initialState = {
   reset: 1,
 };
 
-export const types = applyScope(scope, ["SET_RESET", "SAVE"]);
+export const types = applyScope(scope, [
+  "SET_RESET",
+  "SAVE",
+  "FETCH_REQUEST_FOR_HELP_DETAIL",
+]);
 
 const requestforhelpupdateReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -32,10 +36,15 @@ const mapDispatchToProps = (dispatch) => ({
       type: types.SAVE,
       formData,
     }),
+  getRequestForHelpDetail: () =>
+    dispatch({
+      type: types.FETCH_REQUEST_FOR_HELP_DETAIL,
+    }),
 });
 
 // state from root state
 const mapStateToProps = pageSelector(scope);
+//const mapStateToProps = () => {};
 
 // connect
 export const connecter = (vs) =>

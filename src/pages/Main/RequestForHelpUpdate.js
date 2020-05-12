@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import RequestForHelpUpdateForm from "@components/VolunteerForm/RequestForHelpUpdateForm";
 import options from "@utils/Options";
 import formatter from "@utils/Formatter";
 import { connecter } from "@store/RequestForHelpUpdate";
 
-function RequestForHelpUpdate({ save, reset }) {
+function RequestForHelpUpdate({ save, reset, getRequestForHelpDetail }) {
   // default to Karnataka, Bangalore
   const initialValues = {
     region: [],
     meta: {},
   };
+  useEffect(() => {
+    getRequestForHelpDetail();
+  }, []);
 
   function handleSubmit(formData) {
     if (formData) {

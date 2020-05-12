@@ -121,6 +121,11 @@ async function updateStatus(url, formData) {
   return res || null;
 }
 
+async function getRequestForHelpDetail() {
+  const res = await server.get(`/request/5eb2c6296c9e1d077bec009a`);
+  return res.data.data || [];
+}
+
 export default {
   search,
   saveForm,
@@ -138,4 +143,5 @@ export default {
   exportRequests,
   updateStatus,
   saveNgoForm,
+  getRequestForHelpDetail,
 };

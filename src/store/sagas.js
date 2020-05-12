@@ -12,6 +12,7 @@ import { types as appealReportTypes } from "./appealReport";
 import { types as requestReportTypes } from "./requestReport";
 import { types as requestForHelpTypes } from "./requestForHelp";
 import { types as ngoSignupTypes } from "./ngoSignup";
+import { types as requestForHelpUpdateTypes } from "./requestForHelpUpdate";
 
 import notify from "@utils/Notification";
 import { authStorage } from "@utils/LocalStorage";
@@ -209,6 +210,20 @@ function* updateStatusVal(scope, action) {
   }
 }
 
+// get appeals for home page
+function* fetchRequestForHelpDetail() {
+  try {
+    const res = yield call(Api.getRequestForHelpDetail);
+    yield put({
+      type: requestForHelpUpdateTypes.FETCH_REQUEST_FOR_HELP_DETAIL,
+      appeals: res.docs || [],
+    });
+  } catch (err) {
+    // fail silently
+    console.log("fetching failed", err);
+  }
+}
+
 export function* initSaga() {
   // reports
   yield takeLatest(reportTypes.SEARCH, search, reportTypes, Api.search);
@@ -290,6 +305,12 @@ export function* initSaga() {
 
   // home page
   yield takeLatest(homeTypes.FETCH_APPEALS, fetchAppeals);
+
+  //requrest for help update detail get call
+  yield takeLatest(
+    requestForHelpUpdateTypes.FETCH_REQUEST_FOR_HELP_DETAIL,
+    fetchRequestForHelpDetail
+  );
 
   // load test
   yield helloSaga();

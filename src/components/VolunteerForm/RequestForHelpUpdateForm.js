@@ -28,13 +28,11 @@ function RequestForHelpUpdateForm({
 }) {
   const [form] = Form.useForm();
   const { resetFields } = form;
-
   const [medical, setMedical] = React.useState([]);
   const [nonMedical, setNonMedical] = React.useState([]);
 
   useEffect(() => {
     resetFields();
-
     setMedical([]);
     setNonMedical([]);
   }, [reset]);
