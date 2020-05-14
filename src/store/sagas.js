@@ -123,6 +123,20 @@ function* saveRequestForHelp(scope, action) {
   }
 }
 
+function* saveRequestForHelpUpdate(scope, action) {
+  try {
+    const res = yield call(Api.saveHelpRequestForHelpUpdate, action.formData);
+    if (res.data.status === 1) {
+      notify.base("Request submitted successfully.");
+      yield put({ type: scope.SET_RESET });
+    } else {
+      notify.info(false, res.data.message, res.data.data[0].msg);
+    }
+  } catch (err) {
+    notify.info(false, "Backend error", "Try posting data again");
+  }
+}
+
 // appeal save action
 function* saveAppealData(scope, action) {
   try {
@@ -299,6 +313,13 @@ export function* initSaga() {
     requestForHelpTypes.SAVE,
     saveRequestForHelp,
     requestForHelpTypes
+  );
+
+  // su request creation for main request for help
+  yield takeLatest(
+    requestForHelpUpdateTypes.SAVE,
+    saveRequestForHelpUpdate,
+    requestForHelpUpdateTypes
   );
 
   // save appeal

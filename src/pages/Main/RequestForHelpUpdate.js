@@ -22,7 +22,8 @@ function RequestForHelpUpdate({
 
   function handleSubmit(formData) {
     if (formData) {
-      formData.act = "requestforhelpupdate";
+      formData.id = location.hash.split("?")[1];
+      formData.act = "subrequest";
       formatter(formData);
       save(formData);
     }

@@ -126,6 +126,11 @@ async function getRequestForHelpDetail(requestID) {
   return res || null;
 }
 
+async function saveHelpRequestForHelpUpdate(formData) {
+  const res = await server.post("/request/subrequest", formData);
+  return res || null;
+}
+
 export default {
   search,
   saveForm,
@@ -144,4 +149,5 @@ export default {
   updateStatus,
   saveNgoForm,
   getRequestForHelpDetail,
+  saveHelpRequestForHelpUpdate,
 };
