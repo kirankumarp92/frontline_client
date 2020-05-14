@@ -15,6 +15,7 @@ function RequestForHelpUpdate({
     region: [],
     meta: {},
   };
+  const region = ["KA"];
 
   useEffect(() => {
     getRequestForHelpDetail(location.hash.split("?")[1]);
@@ -24,6 +25,8 @@ function RequestForHelpUpdate({
     if (formData) {
       formData.id = location.hash.split("?")[1];
       formData.act = "subrequest";
+      region.push(formData.region);
+      formData["region"] = region;
       formatter(formData);
       save(formData);
     }
