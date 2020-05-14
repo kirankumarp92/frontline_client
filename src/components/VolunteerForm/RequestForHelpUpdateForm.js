@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Form, Button, Input, Descriptions } from "antd";
 import { formItemLayout, tailFormItemLayout } from "./layout";
 import * as styles from "./Fields/index.module.less";
-import { NGOField } from "./Fields/Input";
+
 import {
   MedicalField,
   NonMedicalField,
@@ -11,7 +11,7 @@ import {
 } from "./Fields/Select";
 
 import { StatusSelectRequestForm } from "../SelectorPanel/SelectFields";
-import { statusOptions } from "@components/SelectorPanel/SelectFields";
+//import { statusOptions } from "@components/SelectorPanel/SelectFields";
 const { Item } = Descriptions;
 
 import { DynamicServicList } from "./Fields/Dynamic";
@@ -21,6 +21,7 @@ const { TextArea } = Input;
 function RequestForHelpUpdateForm({
   onSubmit,
   reset,
+  record,
   regions,
   urban,
   services,
@@ -70,15 +71,21 @@ function RequestForHelpUpdateForm({
     <div>
       <div>
         <Descriptions className={styles.requestForHelpFormDescriptions}>
-          <Item label="PoC Name"></Item>
-          <Item label="PoC Mobile"></Item>
-          <Item label="Number of Persons"></Item>
-          <Item label="Area"></Item>
-          <Item label="Region"></Item>
-          <Item label="Pin Code"></Item>
-          <Item label="Name"></Item>
-          <Item label="Mobile Number"></Item>
-          <Item label="Address"></Item>
+          <Item label="PoC Name">{record.poc_name}</Item>
+          <Item label="PoC Mobile">{record.poc_mobile}</Item>
+          <Item label="Number of Persons">{record.nop}</Item>
+          <Item label="Area">{record.area}</Item>
+          <Item label="Region">
+            {record && record.region && regions
+              ? regions.find((x) => x.id === "17").children[
+                  record.region[1] - 1
+                ].label
+              : record.region}
+          </Item>
+          <Item label="Pin Code">{record.pin}</Item>
+          <Item label="Name">{record.name}</Item>
+          <Item label="Mobile Number">{record.mobile}</Item>
+          <Item label="Address">{record.address}</Item>
         </Descriptions>
       </div>
       <Section label="Request for Help Additonal Fields" />
@@ -90,12 +97,13 @@ function RequestForHelpUpdateForm({
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <Form.Item label="Description" name="desc">
+        <Form.Item label="Description">
           <TextArea
+            name="desc"
             type="textarea"
             rows={4}
-            disabled={true}
-            placeholder="Please describe your request along with secondary contact info if any"
+            readOnly={true}
+            value={record.desc}
           />
         </Form.Item>
 
@@ -105,7 +113,8 @@ function RequestForHelpUpdateForm({
           nameVal={"region"}
           label="Region"
           mode="single"
-          placeholder="Please Select Region"
+          status={record && record.region ? record.region[1] : ""}
+          placeholder="Please select Region"
         />
 
         <WardListField options={urban} isVisible={district.includes("5")} />
@@ -123,10 +132,8 @@ function RequestForHelpUpdateForm({
         />
         <DynamicServicList serviceType="nonmedical" options={nonMedical} />
 
-        <NGOField />
-
-        <Form.Item label="Status" name="status">
-          <StatusSelectRequestForm status={statusOptions} />
+        <Form.Item label="Status">
+          <StatusSelectRequestForm status={record.status} />
         </Form.Item>
 
         <Form.Item {...tailFormItemLayout}>

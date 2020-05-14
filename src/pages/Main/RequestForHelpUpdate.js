@@ -4,14 +4,20 @@ import options from "@utils/Options";
 import formatter from "@utils/Formatter";
 import { connecter } from "@store/RequestForHelpUpdate";
 
-function RequestForHelpUpdate({ save, reset, getRequestForHelpDetail }) {
+function RequestForHelpUpdate({
+  save,
+  reset,
+  getRequestForHelpDetail,
+  record,
+}) {
   // default to Karnataka, Bangalore
   const initialValues = {
     region: [],
     meta: {},
   };
+
   useEffect(() => {
-    getRequestForHelpDetail();
+    getRequestForHelpDetail(location.hash.split("?")[1]);
   }, []);
 
   function handleSubmit(formData) {
@@ -31,6 +37,7 @@ function RequestForHelpUpdate({ save, reset, getRequestForHelpDetail }) {
           onSubmit={handleSubmit}
           initialValues={initialValues}
           reset={reset}
+          record={record}
         />
       </div>
     </div>

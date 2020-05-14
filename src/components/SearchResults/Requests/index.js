@@ -51,7 +51,12 @@ const RequestSearchResults = ({
             expandedRowRender: (record) => (
               <div>
                 <Details record={record} />
-                <Link to="/requestforhelpupdate">
+                <Link
+                  to={{
+                    pathname: "/requestforhelpupdate",
+                    search: record._id,
+                  }}
+                >
                   <button className={styles.updateRequestBtn}>
                     Update Request
                   </button>

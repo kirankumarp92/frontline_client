@@ -121,9 +121,9 @@ async function updateStatus(url, formData) {
   return res || null;
 }
 
-async function getRequestForHelpDetail() {
-  const res = await server.get(`/request/5eb2c6296c9e1d077bec009a`);
-  return res.data.data || [];
+async function getRequestForHelpDetail(requestID) {
+  const res = await server.get(`/request/` + requestID);
+  return res || null;
 }
 
 export default {

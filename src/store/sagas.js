@@ -80,7 +80,7 @@ function* fetchAppeals() {
 // volunteer and kind save actions
 function* saveData(scope, action) {
   try {
-    const res = yield call(Api.saveForm, action.formData);
+    const res = yield call(Api.saveForm, action.requestID);
     if (res.data.status === 1) {
       notify.info(true, action.formData.name);
       yield put({ type: scope.SET_RESET });
@@ -210,13 +210,18 @@ function* updateStatusVal(scope, action) {
   }
 }
 
-// get appeals for home page
-function* fetchRequestForHelpDetail() {
+// get reuest for help detail for reuest for help enhancement page
+function* fetchRequestForHelpDetail(scope, action) {
   try {
-    const res = yield call(Api.getRequestForHelpDetail);
+    const res = yield call(Api.getRequestForHelpDetail, action.requestID);
+    if (res.status === 200) {
+      //console.log(res.data.message);
+    } else {
+      notify.base(res.message);
+    }
     yield put({
-      type: requestForHelpUpdateTypes.FETCH_REQUEST_FOR_HELP_DETAIL,
-      appeals: res.docs || [],
+      type: requestForHelpUpdateTypes.SET_DATA,
+      record: res.data || [],
     });
   } catch (err) {
     // fail silently
@@ -309,7 +314,8 @@ export function* initSaga() {
   //requrest for help update detail get call
   yield takeLatest(
     requestForHelpUpdateTypes.FETCH_REQUEST_FOR_HELP_DETAIL,
-    fetchRequestForHelpDetail
+    fetchRequestForHelpDetail,
+    requestForHelpUpdateTypes
   );
 
   // load test
