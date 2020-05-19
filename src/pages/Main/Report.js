@@ -2,7 +2,7 @@ import React from "react";
 //import VolunteerReport from "../Reports/VolunteerReport";
 import KindReport from "../Reports/KindReport";
 import AppealReport from "../Reports/AppealReport";
-import RequestReport from '../Reports/RequestReport';
+import RequestReport from "../Reports/RequestReport";
 import FormToggle from "@components/FormToggle";
 import { Spacer } from "@components/Utils";
 import { Typography } from "antd";
@@ -13,6 +13,11 @@ const reportsMap = {
   kind: { id: "kind", value: "Support in Kind", render: KindReport },
   appeal: { id: "appeal", value: "Appeal", render: AppealReport },
   request: { id: "request", value: "Request for help", render: RequestReport },
+  subrequest: {
+    id: "subrequest",
+    value: "Subrequest List",
+    render: RequestReport,
+  },
 };
 
 const Placeholder = () => (
@@ -23,7 +28,18 @@ const Placeholder = () => (
 );
 
 const RenderPage = ({ type }) => {
-  const PageToRender = type in reportsMap ? reportsMap[type].render : Placeholder;
+  if (!type) {
+    type =
+      location.hash &&
+      location.hash.split("?").length &&
+      location.hash.split("?")[1]
+        ? location.hash.split("?")[1]
+        : "kind";
+  } else {
+    location.hash = "/report?" + type;
+  }
+  const PageToRender =
+    type in reportsMap ? reportsMap[type].render : Placeholder;
   return <PageToRender />;
 };
 
