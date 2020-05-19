@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { applyScope } from "./utils";
 import { pageSelector } from "./selectors";
 import { createSelector } from "reselect";
-//import parseData from "@utils/Parser";
 
 const scope = "requestForHelpUpdate";
 
@@ -17,6 +16,7 @@ export const types = applyScope(scope, [
   "SAVE",
   "FETCH_REQUEST_FOR_HELP_DETAIL",
   "SET_DATA",
+  "NAVIGATE_TO_REPORT",
 ]);
 
 const requestForHelpUpdateReducer = (state = initialState, action) => {
@@ -28,6 +28,10 @@ const requestForHelpUpdateReducer = (state = initialState, action) => {
     case types.SET_DATA:
       return update(state, {
         record: { $set: action.record },
+      });
+    case types.NAVIGATE_TO_REPORT:
+      return update(state, {
+        naviagteToReport: { $set: action.naviagteToReport },
       });
   }
   return state;

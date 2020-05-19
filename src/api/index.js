@@ -127,7 +127,7 @@ async function getRequestForHelpDetail(requestID) {
 }
 
 async function saveHelpRequestForHelpUpdate(formData) {
-  const res = await server.post("/request/subrequest", formData);
+  const res = await server.post("/subrequest", formData);
   return res || null;
 }
 

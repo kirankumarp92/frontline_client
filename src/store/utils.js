@@ -30,3 +30,7 @@ export function formatPagination(res) {
     pages: res.pages || null,
   };
 }
+
+export function naviagteToReport() {
+  window.location.hash = "/report?request";
+}

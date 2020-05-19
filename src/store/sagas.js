@@ -16,7 +16,7 @@ import { types as requestForHelpUpdateTypes } from "./requestForHelpUpdate";
 
 import notify from "@utils/Notification";
 import { authStorage } from "@utils/LocalStorage";
-import { buildUserInfo, formatPagination } from "./utils";
+import { buildUserInfo, formatPagination, naviagteToReport } from "./utils";
 import { triggerExport } from "@utils/Export";
 
 // initialize  and check auth
@@ -129,6 +129,10 @@ function* saveRequestForHelpUpdate(scope, action) {
     if (res.data.status === 1) {
       notify.base("Request submitted successfully.");
       yield put({ type: scope.SET_RESET });
+      yield put({
+        type: scope.NAVIGATE_TO_REPORT,
+        naviagteToReport: naviagteToReport(),
+      });
     } else {
       notify.info(false, res.data.message, res.data.data[0].msg);
     }
