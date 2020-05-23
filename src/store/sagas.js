@@ -11,6 +11,7 @@ import { types as homeTypes } from "./homeContent";
 import { types as appealReportTypes } from "./appealReport";
 import { types as requestReportTypes } from "./requestReport";
 import { types as requestForHelpTypes } from "./requestForHelp";
+import { types as ngoReportTypes } from "./ngoReport";
 import { types as ngoSignupTypes } from "./ngoSignup";
 import { types as requestForHelpUpdateTypes } from "./requestForHelpUpdate";
 
@@ -160,7 +161,6 @@ function* saveAppealData(scope, action) {
 function* login(action) {
   try {
     const res = yield call(Api.login, action.formData);
-
     if (res.data.status == 1) {
       notify.base("Logged in Successfully!");
       const data = res.data.data;
@@ -263,6 +263,12 @@ export function* initSaga() {
     requestReportTypes,
     Api.searchRequests
   );
+  yield takeLatest(
+    ngoReportTypes.SEARCH,
+    search,
+    ngoReportTypes,
+    Api.searchNgoForm
+  );
 
   // exports
   yield takeLatest(
@@ -289,6 +295,13 @@ export function* initSaga() {
     reportTypes,
     Api.exportKind
   );
+  // NGO Export
+  yield takeLatest(
+    ngoReportTypes.EXPORT_CSV,
+    exportCSV,
+    ngoReportTypes,
+    Api.exportNgoForm
+  );
 
   //update the status column of entry.
   yield takeLatest(
@@ -305,6 +318,13 @@ export function* initSaga() {
     kindReportTypes.UPDATE_STATUS,
     updateStatusVal,
     kindReportTypes
+  );
+
+  // Update Status column of NGO
+  yield takeLatest(
+    ngoReportTypes.UPDATE_STATUS,
+    updateStatusVal,
+    ngoReportTypes
   );
 
   // save volunteers and kind
