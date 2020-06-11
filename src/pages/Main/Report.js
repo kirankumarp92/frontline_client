@@ -1,11 +1,10 @@
 import React from "react";
 import VolunteerReport from "../Reports/VolunteerReport";
 import KindReport from "../Reports/KindReport";
-import AppealReport from "../Reports/AppealReport";
 import RequestReport from "../Reports/RequestReport";
 
 // import AppealReport from "../Reports/AppealReport";
-import RequestReport from "../Reports/RequestReport";
+import SubrequestReport from "../Reports/SubrequestReport";
 import NGOReport from "../Reports/NGOReport";
 import FormToggle from "@components/FormToggle";
 import { Spacer } from "@components/Utils";
@@ -21,7 +20,7 @@ const reportsMap = {
   subrequest: {
     id: "subrequest",
     value: "Subrequest List",
-    render: RequestReport,
+    render: SubrequestReport,
   },
 };
 

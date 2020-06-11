@@ -13,6 +13,7 @@ import appealReducer from "./appeal";
 import appealReportReducer from "./appealReport";
 import requestForHelpReducer from "./requestForHelp";
 import requestForHelpUpdateReducer from "./requestForHelpUpdate";
+import ngoReportReducer from "./ngoReport";
 
 const sagaMiddleware = createSagaMiddleware();
 
