@@ -155,3 +155,26 @@ export const UrbanOperationalArea = ({
   ) : (
     ""
   );
+
+export const WardListField = ({
+  options,
+  onChange,
+  isVisible = false,
+  label = "Ward",
+}) =>
+  isVisible ? (
+    <Form.Item label={label} name="ward">
+      <TreeSelect
+        {...{
+          treeData: options,
+          onChange: onChange,
+          treeCheckable: false,
+          multiple: false,
+          showCheckedStrategy: TreeSelect.SHOW_PARENT,
+          placeholder: "Please select Ward",
+        }}
+      />
+    </Form.Item>
+  ) : (
+    ""
+  );
