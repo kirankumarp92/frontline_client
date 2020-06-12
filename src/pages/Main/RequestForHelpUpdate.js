@@ -23,7 +23,7 @@ function RequestForHelpUpdate({
 
   function handleSubmit(formData) {
     if (formData) {
-      formData.id = location.hash.split("?")[1];
+      formData.req_id = location.hash.split("?")[1];
       formData.act = "subrequest";
       region.push(formData.region);
       formData["region"] = region;

@@ -10,6 +10,7 @@ import { types as appealTypes } from "./appeal";
 import { types as homeTypes } from "./homeContent";
 import { types as appealReportTypes } from "./appealReport";
 import { types as requestReportTypes } from "./requestReport";
+import { types as subrequestReportTypes } from "./subrequestReport";
 import { types as requestForHelpTypes } from "./requestForHelp";
 import { types as ngoReportTypes } from "./ngoReport";
 import { types as ngoSignupTypes } from "./ngoSignup";
@@ -53,6 +54,25 @@ function* search(scope, apiFn, action) {
   try {
     const res = yield call(apiFn, action.params);
     yield put({ type: scope.SET_RESULT, result: res.docs || [] });
+    yield put({
+      type: scope.SET_PAGINATION,
+      pagination: formatPagination(res),
+    });
+  } catch (err) {
+    if (err.response.status === 401) {
+      notify.base("Session expired", "Please login again");
+      yield put({ type: commonTypes.LOGOUT });
+    } else {
+      notify.base("Error, please reload and try again");
+    }
+  }
+}
+
+// reports search
+function* searchSubrequest(scope, apiFn, action) {
+  try {
+    const res = yield call(apiFn, action.params);
+    yield put({ type: scope.SET_RESULT, result: res || {} });
     yield put({
       type: scope.SET_PAGINATION,
       pagination: formatPagination(res),
@@ -129,7 +149,7 @@ function* saveRequestForHelpUpdate(scope, action) {
   try {
     const res = yield call(Api.saveHelpRequestForHelpUpdate, action.formData);
     if (res.data.status === 1) {
-      notify.base("Request submitted successfully.");
+      notify.base(res.data.message);
       yield put({ type: scope.SET_RESET });
       yield put({
         type: scope.NAVIGATE_TO_REPORT,
@@ -271,12 +291,25 @@ export function* initSaga() {
     Api.searchNgoForm
   );
 
+  yield takeLatest(
+    subrequestReportTypes.SEARCH,
+    searchSubrequest,
+    subrequestReportTypes,
+    Api.searchSubrequests
+  );
+
   // exports
   yield takeLatest(
     appealReportTypes.EXPORT_CSV,
     exportCSV,
     appealReportTypes,
     Api.exportAppeals
+  );
+  yield takeLatest(
+    subrequestReportTypes.EXPORT_CSV,
+    exportCSV,
+    subrequestReportTypes,
+    Api.exportRequests
   );
   yield takeLatest(
     requestReportTypes.EXPORT_CSV,

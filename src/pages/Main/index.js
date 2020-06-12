@@ -34,6 +34,7 @@ const Appeal = lazy(() => import("./Appeal"));
 const Report = lazy(() => import("./Report"));
 const RequestForHelp = lazy(() => import("./RequestForHelp"));
 const RequestForHelpUpdate = lazy(() => import("./RequestForHelpUpdate"));
+const SubrequestOfMainRequest = lazy(() => import("./SubrequestOfMainRequest"));
 
 const { Content, Footer } = Layout;
 
@@ -104,8 +105,14 @@ function App({ loggedIn, user, volunteerCount }) {
                         <RequestForHelpUpdate {...pageProps} />
                       </LoginRequired>
                     </Route>
+                    <Route path="/subrequestsOfRequest">
+                      <LoginRequired loggedIn={loggedIn}>
+                        <SubrequestOfMainRequest {...pageProps} />
+                      </LoginRequired>
+                    </Route>
 
                     {/* <Route path="/demo">
+                    <Route path="/NGO">
                       <LoginRequired loggedIn={loggedIn}>
                         <Authorize
                           roles={["ngo", "admin", "staff"]}

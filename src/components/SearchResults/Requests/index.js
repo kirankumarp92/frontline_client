@@ -61,6 +61,16 @@ const RequestSearchResults = ({
                     Update Request
                   </button>
                 </Link>
+                <Link
+                  to={{
+                    pathname: "/subrequestsOfRequest",
+                    search: record._id,
+                  }}
+                >
+                  <button className={styles.updateRequestBtn}>
+                    View Subrequest List
+                  </button>
+                </Link>
               </div>
             ),
             expandRowByClick: false,

@@ -93,6 +93,11 @@ async function searchRequests(params) {
   return res.data.data || [];
 }
 
+async function searchSubrequests(params) {
+  const res = await server.post(`/subrequest/search`, params);
+  return res.data.data || [];
+}
+
 async function exportRequests(params) {
   const res = await server.post(`/request/export/`, params);
   return res.data.data || [];
@@ -165,6 +170,7 @@ export default {
   fetchAppeals,
   saveHelpRequest,
   searchRequests,
+  searchSubrequests,
   exportAppeals,
   exportKind,
   exportRequests,
