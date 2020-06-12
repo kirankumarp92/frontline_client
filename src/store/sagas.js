@@ -13,10 +13,11 @@ import { types as requestReportTypes } from "./requestReport";
 import { types as requestForHelpTypes } from "./requestForHelp";
 import { types as ngoReportTypes } from "./ngoReport";
 import { types as ngoSignupTypes } from "./ngoSignup";
+import { types as requestForHelpUpdateTypes } from "./requestForHelpUpdate";
 
 import notify from "@utils/Notification";
 import { authStorage } from "@utils/LocalStorage";
-import { buildUserInfo, formatPagination } from "./utils";
+import { buildUserInfo, formatPagination, naviagteToReport } from "./utils";
 import { triggerExport } from "@utils/Export";
 
 // initialize  and check auth
@@ -80,7 +81,7 @@ function* fetchAppeals() {
 // volunteer and kind save actions
 function* saveData(scope, action) {
   try {
-    const res = yield call(Api.saveForm, action.formData);
+    const res = yield call(Api.saveForm, action.requestID);
     if (res.data.status === 1) {
       notify.info(true, action.formData.name);
       yield put({ type: scope.SET_RESET });
@@ -95,6 +96,7 @@ function* saveData(scope, action) {
 
 // volunteer and kind save actions
 function* saveNgoData(scope, action) {
+  console.log("saveNgoData called");
   try {
     const res = yield call(Api.saveNgoForm, action.formData);
     if (res.data.status === 1) {
@@ -115,6 +117,24 @@ function* saveRequestForHelp(scope, action) {
     if (res.data.status === 1) {
       notify.base("Request submitted successfully.");
       yield put({ type: scope.SET_RESET });
+    } else {
+      notify.info(false, res.data.message, res.data.data[0].msg);
+    }
+  } catch (err) {
+    notify.info(false, "Backend error", "Try posting data again");
+  }
+}
+
+function* saveRequestForHelpUpdate(scope, action) {
+  try {
+    const res = yield call(Api.saveHelpRequestForHelpUpdate, action.formData);
+    if (res.data.status === 1) {
+      notify.base("Request submitted successfully.");
+      yield put({ type: scope.SET_RESET });
+      yield put({
+        type: scope.NAVIGATE_TO_REPORT,
+        naviagteToReport: naviagteToReport(),
+      });
     } else {
       notify.info(false, res.data.message, res.data.data[0].msg);
     }
@@ -206,6 +226,25 @@ function* updateStatusVal(scope, action) {
     }
   } catch (err) {
     notify.base("Server error", "Try posting data again");
+  }
+}
+
+// get reuest for help detail for reuest for help enhancement page
+function* fetchRequestForHelpDetail(scope, action) {
+  try {
+    const res = yield call(Api.getRequestForHelpDetail, action.requestID);
+    if (res.status === 200) {
+      //console.log(res.data.message);
+    } else {
+      notify.base(res.message);
+    }
+    yield put({
+      type: requestForHelpUpdateTypes.SET_DATA,
+      record: res.data || [],
+    });
+  } catch (err) {
+    // fail silently
+    console.log("fetching failed", err);
   }
 }
 
@@ -301,6 +340,13 @@ export function* initSaga() {
     requestForHelpTypes
   );
 
+  // su request creation for main request for help
+  yield takeLatest(
+    requestForHelpUpdateTypes.SAVE,
+    saveRequestForHelpUpdate,
+    requestForHelpUpdateTypes
+  );
+
   // save appeal
   yield takeLatest(appealTypes.SAVE, saveAppealData, appealTypes);
 
@@ -310,6 +356,13 @@ export function* initSaga() {
 
   // home page
   yield takeLatest(homeTypes.FETCH_APPEALS, fetchAppeals);
+
+  //requrest for help update detail get call
+  yield takeLatest(
+    requestForHelpUpdateTypes.FETCH_REQUEST_FOR_HELP_DETAIL,
+    fetchRequestForHelpDetail,
+    requestForHelpUpdateTypes
+  );
 
   // load test
   yield helloSaga();

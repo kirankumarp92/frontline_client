@@ -142,6 +142,16 @@ async function exportNgoForm(params) {
   return res.data.data || [];
 }
 
+async function getRequestForHelpDetail(requestID) {
+  const res = await server.get(`/request/` + requestID);
+  return res || null;
+}
+
+async function saveHelpRequestForHelpUpdate(formData) {
+  const res = await server.post("/request/subrequest", formData);
+  return res || null;
+}
+
 export default {
   search,
   saveForm,
@@ -162,4 +172,6 @@ export default {
   searchNgoForm,
   saveNgoForm,
   exportNgoForm,
+  getRequestForHelpDetail,
+  saveHelpRequestForHelpUpdate,
 };

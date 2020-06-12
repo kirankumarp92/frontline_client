@@ -29,7 +29,7 @@ const VolunteerModal = (props) => {
         <p className="modal-txt">
           <span> Register as an </span>
           <span>
-            <Link to="/ngosignup">
+            <Link to="/ngo">
               <Button type="primary">NGO</Button>
             </Link>
           </span>
