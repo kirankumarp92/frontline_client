@@ -10,13 +10,15 @@ import { types as appealTypes } from "./appeal";
 import { types as homeTypes } from "./homeContent";
 import { types as appealReportTypes } from "./appealReport";
 import { types as requestReportTypes } from "./requestReport";
+import { types as subrequestReportTypes } from "./subrequestReport";
 import { types as requestForHelpTypes } from "./requestForHelp";
 import { types as ngoReportTypes } from "./ngoReport";
 import { types as ngoSignupTypes } from "./ngoSignup";
+import { types as requestForHelpUpdateTypes } from "./requestForHelpUpdate";
 
 import notify from "@utils/Notification";
 import { authStorage } from "@utils/LocalStorage";
-import { buildUserInfo, formatPagination } from "./utils";
+import { buildUserInfo, formatPagination, naviagteToReport } from "./utils";
 import { triggerExport } from "@utils/Export";
 
 // initialize  and check auth
@@ -66,6 +68,25 @@ function* search(scope, apiFn, action) {
   }
 }
 
+// reports search
+function* searchSubrequest(scope, apiFn, action) {
+  try {
+    const res = yield call(apiFn, action.params);
+    yield put({ type: scope.SET_RESULT, result: res || {} });
+    yield put({
+      type: scope.SET_PAGINATION,
+      pagination: formatPagination(res),
+    });
+  } catch (err) {
+    if (err.response.status === 401) {
+      notify.base("Session expired", "Please login again");
+      yield put({ type: commonTypes.LOGOUT });
+    } else {
+      notify.base("Error, please reload and try again");
+    }
+  }
+}
+
 // get appeals for home page
 function* fetchAppeals() {
   try {
@@ -80,7 +101,7 @@ function* fetchAppeals() {
 // volunteer and kind save actions
 function* saveData(scope, action) {
   try {
-    const res = yield call(Api.saveForm, action.formData);
+    const res = yield call(Api.saveForm, action.requestID);
     if (res.data.status === 1) {
       notify.info(true, action.formData.name);
       yield put({ type: scope.SET_RESET });
@@ -95,6 +116,7 @@ function* saveData(scope, action) {
 
 // volunteer and kind save actions
 function* saveNgoData(scope, action) {
+  console.log("saveNgoData called");
   try {
     const res = yield call(Api.saveNgoForm, action.formData);
     if (res.data.status === 1) {
@@ -115,6 +137,24 @@ function* saveRequestForHelp(scope, action) {
     if (res.data.status === 1) {
       notify.base("Request submitted successfully.");
       yield put({ type: scope.SET_RESET });
+    } else {
+      notify.info(false, res.data.message, res.data.data[0].msg);
+    }
+  } catch (err) {
+    notify.info(false, "Backend error", "Try posting data again");
+  }
+}
+
+function* saveRequestForHelpUpdate(scope, action) {
+  try {
+    const res = yield call(Api.saveHelpRequestForHelpUpdate, action.formData);
+    if (res.data.status === 1) {
+      notify.base(res.data.message);
+      yield put({ type: scope.SET_RESET });
+      yield put({
+        type: scope.NAVIGATE_TO_REPORT,
+        naviagteToReport: naviagteToReport(),
+      });
     } else {
       notify.info(false, res.data.message, res.data.data[0].msg);
     }
@@ -209,6 +249,25 @@ function* updateStatusVal(scope, action) {
   }
 }
 
+// get reuest for help detail for reuest for help enhancement page
+function* fetchRequestForHelpDetail(scope, action) {
+  try {
+    const res = yield call(Api.getRequestForHelpDetail, action.requestID);
+    if (res.status === 200) {
+      //console.log(res.data.message);
+    } else {
+      notify.base(res.message);
+    }
+    yield put({
+      type: requestForHelpUpdateTypes.SET_DATA,
+      record: res.data || [],
+    });
+  } catch (err) {
+    // fail silently
+    console.log("fetching failed", err);
+  }
+}
+
 export function* initSaga() {
   // reports
   yield takeLatest(reportTypes.SEARCH, search, reportTypes, Api.search);
@@ -232,12 +291,25 @@ export function* initSaga() {
     Api.searchNgoForm
   );
 
+  yield takeLatest(
+    subrequestReportTypes.SEARCH,
+    searchSubrequest,
+    subrequestReportTypes,
+    Api.searchSubrequests
+  );
+
   // exports
   yield takeLatest(
     appealReportTypes.EXPORT_CSV,
     exportCSV,
     appealReportTypes,
     Api.exportAppeals
+  );
+  yield takeLatest(
+    subrequestReportTypes.EXPORT_CSV,
+    exportCSV,
+    subrequestReportTypes,
+    Api.exportRequests
   );
   yield takeLatest(
     requestReportTypes.EXPORT_CSV,
@@ -301,6 +373,13 @@ export function* initSaga() {
     requestForHelpTypes
   );
 
+  // su request creation for main request for help
+  yield takeLatest(
+    requestForHelpUpdateTypes.SAVE,
+    saveRequestForHelpUpdate,
+    requestForHelpUpdateTypes
+  );
+
   // save appeal
   yield takeLatest(appealTypes.SAVE, saveAppealData, appealTypes);
 
@@ -310,6 +389,13 @@ export function* initSaga() {
 
   // home page
   yield takeLatest(homeTypes.FETCH_APPEALS, fetchAppeals);
+
+  //requrest for help update detail get call
+  yield takeLatest(
+    requestForHelpUpdateTypes.FETCH_REQUEST_FOR_HELP_DETAIL,
+    fetchRequestForHelpDetail,
+    requestForHelpUpdateTypes
+  );
 
   // load test
   yield helloSaga();

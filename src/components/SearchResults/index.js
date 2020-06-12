@@ -3,6 +3,7 @@ import KindSearchResults from "./Kind";
 import AppealSearchResults from "./Appeal";
 import RequestSearchResults from "./Requests";
 import NGOSearchResults from "./Ngo";
+import SubrequestSearchResults from "./Subrequests";
 
 export {
   VolunteerSearchResults,
@@ -10,4 +11,5 @@ export {
   AppealSearchResults,
   RequestSearchResults,
   NGOSearchResults,
+  SubrequestSearchResults,
 };

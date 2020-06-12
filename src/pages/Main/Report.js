@@ -3,6 +3,9 @@ import VolunteerReport from "../Reports/VolunteerReport";
 import KindReport from "../Reports/KindReport";
 // import AppealReport from "../Reports/AppealReport";
 import RequestReport from "../Reports/RequestReport";
+
+// import AppealReport from "../Reports/AppealReport";
+import SubrequestReport from "../Reports/SubrequestReport";
 import NGOReport from "../Reports/NGOReport";
 import FormToggle from "@components/FormToggle";
 import { Spacer } from "@components/Utils";
@@ -15,6 +18,11 @@ const reportsMap = {
   kind: { id: "kind", value: "Support in Kind", render: KindReport },
   // appeal: { id: "appeal", value: "Appeal", render: AppealReport },
   request: { id: "request", value: "Request for help", render: RequestReport },
+  subrequest: {
+    id: "subrequest",
+    value: "Subrequest List",
+    render: SubrequestReport,
+  },
 };
 
 const Placeholder = () => (
@@ -25,6 +33,16 @@ const Placeholder = () => (
 );
 
 const RenderPage = ({ type }) => {
+  if (!type) {
+    type =
+      location.hash &&
+      location.hash.split("?").length &&
+      location.hash.split("?")[1]
+        ? location.hash.split("?")[1]
+        : "kind";
+  } else {
+    location.hash = "/report?" + type;
+  }
   const PageToRender =
     type in reportsMap ? reportsMap[type].render : Placeholder;
   return <PageToRender />;

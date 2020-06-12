@@ -5,7 +5,11 @@ const { Option } = Select;
 import { toNumber } from "../utils";
 
 const unitSelector = (baseName) => (
-  <Form.Item name={[...baseName, "unit"]} noStyle>
+  <Form.Item
+    name={[...baseName, "unit"]}
+    noStyle
+    rules={[{ required: true, message: "Unit is required" }]}
+  >
     <Select style={{ width: 90 }}>
       <Option value="count">Count</Option>
       <Option value="kilo">kg</Option>
@@ -29,6 +33,7 @@ export const DynamicServicList = ({ serviceType, options }) => {
             transform: toNumber,
             message: "Invalid number format",
           },
+          { required: true, message: "Quantity is required" },
         ]}
       >
         <Input

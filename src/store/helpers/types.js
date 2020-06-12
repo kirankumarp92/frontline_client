@@ -10,6 +10,7 @@ const reportTypes = [
   "SET_STATUS",
   "UPDATE_STATUS",
   "UPDATE_RESULT",
+  "SET_REQUEST_ID",
 ];
 
 export { reportTypes };

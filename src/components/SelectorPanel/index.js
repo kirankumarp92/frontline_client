@@ -5,7 +5,7 @@ import { Spacer } from "@components/Utils";
 import { Button, DatePicker } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { ModeSelect, RegionSelect, StatusSelect } from "./SelectFields";
-
+import { RequestNameField } from "./InputFields";
 import { ServiceSelector } from "./TreeSelects";
 
 const { RangePicker } = DatePicker;
@@ -21,6 +21,10 @@ function SelectorPanel({
   region,
   regions,
   onRegionChange,
+
+  requestId,
+  onRequestIDChange,
+  //request ID
 
   // service props
   service,
@@ -52,15 +56,37 @@ function SelectorPanel({
         ""
       )}
 
-      <div className={styles.selectorCo}>
-        <span>Region</span>
-        <RegionSelect
-          region={region}
-          regions={regions}
-          onRegionChange={onRegionChange}
-        />
-      </div>
-      <Spacer />
+      {onRequestIDChange ? (
+        <>
+          <div className={styles.selectorCo}>
+            <span>Request ID</span>
+            <RequestNameField
+              requestId={requestId}
+              onRequestIDChange={onRequestIDChange}
+            />
+          </div>
+          <Spacer />
+        </>
+      ) : (
+        ""
+      )}
+
+      {onRegionChange ? (
+        <>
+          <div className={styles.selectorCo}>
+            <span>Region</span>
+            <RegionSelect
+              region={region}
+              regions={regions}
+              onRegionChange={onRegionChange}
+            />
+          </div>
+          <Spacer />
+        </>
+      ) : (
+        ""
+      )}
+
       {service && 1 == 0 ? (
         <React.Fragment>
           <div className={styles.selectorCo}>

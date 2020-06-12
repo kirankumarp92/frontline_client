@@ -13,6 +13,8 @@ import requestReportReducer from "./requestReport";
 import appealReducer from "./appeal";
 import appealReportReducer from "./appealReport";
 import requestForHelpReducer from "./requestForHelp";
+import requestForHelpUpdateReducer from "./requestForHelpUpdate";
+import subrequestReportReducer from "./subrequestReport";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -28,7 +30,9 @@ const rootReducer = combineReducers({
   appealReport: appealReportReducer,
   requestReport: requestReportReducer,
   requestForHelp: requestForHelpReducer,
+  requestForHelpUpdate: requestForHelpUpdateReducer,
   ngoReport: ngoReportReducer,
+  subrequestReport: subrequestReportReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));

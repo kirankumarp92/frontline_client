@@ -1,7 +1,9 @@
 import React from "react";
 import { Table } from "antd";
 import Details from "./Details";
+import * as styles from "./styles.module.less";
 import { getPaginationObject, renderStatus } from "../utils";
+import { Link } from "react-router-dom";
 
 const RequestSearchResults = ({
   result,
@@ -49,6 +51,26 @@ const RequestSearchResults = ({
             expandedRowRender: (record) => (
               <div>
                 <Details record={record} />
+                <Link
+                  to={{
+                    pathname: "/requestforhelpupdate",
+                    search: record._id,
+                  }}
+                >
+                  <button className={styles.updateRequestBtn}>
+                    Update Request
+                  </button>
+                </Link>
+                <Link
+                  to={{
+                    pathname: "/subrequestsOfRequest",
+                    search: record._id,
+                  }}
+                >
+                  <button className={styles.updateRequestBtn}>
+                    View Subrequest List
+                  </button>
+                </Link>
               </div>
             ),
             expandRowByClick: false,

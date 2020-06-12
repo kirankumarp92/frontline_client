@@ -93,6 +93,11 @@ async function searchRequests(params) {
   return res.data.data || [];
 }
 
+async function searchSubrequests(params) {
+  const res = await server.post(`/subrequest/search`, params);
+  return res.data.data || [];
+}
+
 async function exportRequests(params) {
   const res = await server.post(`/request/export/`, params);
   return res.data.data || [];
@@ -142,6 +147,16 @@ async function exportNgoForm(params) {
   return res.data.data || [];
 }
 
+async function getRequestForHelpDetail(requestID) {
+  const res = await server.get(`/request/` + requestID);
+  return res || null;
+}
+
+async function saveHelpRequestForHelpUpdate(formData) {
+  const res = await server.post("/request/subrequest", formData);
+  return res || null;
+}
+
 export default {
   search,
   saveForm,
@@ -155,6 +170,7 @@ export default {
   fetchAppeals,
   saveHelpRequest,
   searchRequests,
+  searchSubrequests,
   exportAppeals,
   exportKind,
   exportRequests,
@@ -162,4 +178,6 @@ export default {
   searchNgoForm,
   saveNgoForm,
   exportNgoForm,
+  getRequestForHelpDetail,
+  saveHelpRequestForHelpUpdate,
 };

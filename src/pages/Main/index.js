@@ -18,8 +18,8 @@ import Home from "./Home";
 import Login from "./Login";
 import Logout from "./Logout";
 import LoginRequired from "./LoginRequired";
-import Demo from "./Demo";
-import Authorize, { Fallback } from "@components/Authorize";
+// import Demo from "./Demo";
+// import Authorize, { Fallback } from "@components/Authorize";
 
 const PrivacyPolicy = lazy(() => import("@components/Content/PrivacyPolicy"));
 const Terms = lazy(() => import("@components/Content/Terms"));
@@ -33,6 +33,8 @@ const Kind = lazy(() => import("./Kind"));
 const Appeal = lazy(() => import("./Appeal"));
 const Report = lazy(() => import("./Report"));
 const RequestForHelp = lazy(() => import("./RequestForHelp"));
+const RequestForHelpUpdate = lazy(() => import("./RequestForHelpUpdate"));
+const SubrequestOfMainRequest = lazy(() => import("./SubrequestOfMainRequest"));
 
 const { Content, Footer } = Layout;
 
@@ -98,8 +100,19 @@ function App({ loggedIn, user, volunteerCount }) {
                     <Route path="/request">
                       <RequestForHelp {...pageProps} />
                     </Route>
+                    <Route path="/requestforhelpupdate">
+                      <LoginRequired loggedIn={loggedIn}>
+                        <RequestForHelpUpdate {...pageProps} />
+                      </LoginRequired>
+                    </Route>
+                    <Route path="/subrequestsOfRequest">
+                      <LoginRequired loggedIn={loggedIn}>
+                        <SubrequestOfMainRequest {...pageProps} />
+                      </LoginRequired>
+                    </Route>
 
-                    <Route path="/demo">
+                    {/* <Route path="/demo">
+                    <Route path="/NGO">
                       <LoginRequired loggedIn={loggedIn}>
                         <Authorize
                           roles={["ngo", "admin", "staff"]}
@@ -108,7 +121,7 @@ function App({ loggedIn, user, volunteerCount }) {
                           <Demo />
                         </Authorize>
                       </LoginRequired>
-                    </Route>
+                    </Route> */}
 
                     <Route path="/login">
                       <Login {...pageProps} />

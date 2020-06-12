@@ -40,6 +40,7 @@ const formatDateRange = (dateRange) => {
 
 // format search queries
 export function formatSearchQuery({
+  requestId,
   mode,
   region,
   service,
@@ -54,6 +55,7 @@ export function formatSearchQuery({
   const params = {
     mode: mode || "all",
     region: filteredRegion || "all",
+    requestId: requestId,
     ...formatService(service),
     ...formatDateRange(dateRange),
   };

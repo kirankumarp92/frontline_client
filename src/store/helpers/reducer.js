@@ -13,6 +13,11 @@ function generateReportDispatcher(types, custom = {}) {
         type: types.SET_MODE,
         mode,
       }),
+    setRequestId: (requestId) =>
+      dispatch({
+        type: types.SET_REQUEST_ID,
+        requestId,
+      }),
     setRegion: (region) =>
       dispatch({
         type: types.SET_REGION,
@@ -64,6 +69,10 @@ function generateReportReducer(types, initialState, customReducer = null) {
       case types.SET_MODE:
         return update(state, {
           mode: { $set: action.mode },
+        });
+      case types.SET_REQUEST_ID:
+        return update(state, {
+          requestId: { $set: action.requestId },
         });
       case types.SET_REGION:
         return update(state, {
