@@ -11,6 +11,7 @@ import {
   NameField,
   ConfirmMobileField,
   NOPField,
+  AadharField,
 } from "./Fields/Input";
 import { Section } from "./Fields/Other";
 
@@ -43,6 +44,8 @@ const RequestForHelpForm = (props) => {
           label="Point of Contact - Mobile"
           placeholder="Enter point of contact's mobile number"
         />
+
+        <AadharField name="aadhaar" />
 
         <Form.Item
           label="Description"
